@@ -6,8 +6,4 @@ export default class App {
   constructor() {
     this.#DonateForm = new DonateForm();
   }
-
-  run() {
-    // this.#DonateForm.inputDonate();
-  }
 }

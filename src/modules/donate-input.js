@@ -1,3 +1,7 @@
+import moment from "moment";
+import DonatesList from "./donate-list";
+import { formatDonate } from "../utils/formatDonate";
+
 export default class DonateForm {
   #total;
   #input;
@@ -5,31 +9,38 @@ export default class DonateForm {
   #currentDonate;
   #date;
   #donateSum;
+  #errorSpan;
 
-  constructor(donate, timestamp) {
+  constructor() {
     this.#total = document.querySelector("#total-amount");
     this.#input = document.querySelector(".donate-form__donate-input");
     this.#btnDonate = document.querySelector(".donate-form__submit-button");
+    this.#errorSpan = document.querySelector(".donate-form__error");
     this.#btnDonate.addEventListener("click", (event) => {
       event.preventDefault();
-      console.log(event.target);
-      console.log(event);
-      console.log(Number(event.target.form[0].value));
       this.inputDonate(Number(event.target.form[0].value));
     });
-    this.#currentDonate = donate;
-    this.#date = timestamp;
   }
 
   inputDonate(value) {
-    this.#currentDonate = value;
-    console.log("Задонатено:", this.#currentDonate);
-    this.#input.value = '';
-    this.#date = new Date().getTime();
-    console.log(this.#date);
-     this.#donateSum = Number.parseInt(this.#total.innerHTML)+ this.#currentDonate;
-    // console.log(Number.parseInt(this.#total.innerHTML) + this.#currentDonate);
-    console.log(this.#donateSum);
-     this.#total.innerHTML = `${this.#donateSum}$`
+    if (value <= 0) {
+      this.#input.value = "";
+      this.#errorSpan.removeAttribute("hidden");
+      return;
+    }
+
+    if (value > 0) {
+      this.#errorSpan.setAttribute("hidden", "true");
+    }
+
+    this.#currentDonate = formatDonate(value);
+    this.#input.value = "";
+    this.#date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    this.#donateSum =
+      Number.parseInt(this.#total.innerHTML) + this.#currentDonate;
+    this.#total.innerHTML = `${this.#donateSum}$`;
+
+    const donateList = new DonatesList();
+    donateList.addDonate(this.#currentDonate, this.#date);
   }
 }

@@ -5,8 +5,12 @@ export default class DonatesList {
   }
 
   addDonate(donate, time) {
-    const item = document.createElement('li');
-    item.className = 'donate-item'
-    const date = new Date(time);
+    const item = document.createElement("div");
+    const donateValue = document.createElement("b");
+    donateValue.innerHTML = `${donate}$`;
+    item.className = "donate-item";
+    item.innerHTML = `${time} - `;
+    item.append(donateValue);
+    this.#donates.append(item);
   }
 }
