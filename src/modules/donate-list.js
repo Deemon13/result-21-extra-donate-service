@@ -4,5 +4,9 @@ export default class DonatesList {
     this.#donates = document.querySelector(".donates-container__donates");
   }
 
-  addDonate() {}
+  addDonate(donate, time) {
+    const item = document.createElement('li');
+    item.className = 'donate-item'
+    const date = new Date(time);
+  }
 }

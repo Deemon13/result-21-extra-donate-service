@@ -8,6 +8,6 @@ export default class App {
   }
 
   run() {
-    this.#DonateForm.inputDonate();
+    // this.#DonateForm.inputDonate();
   }
 }

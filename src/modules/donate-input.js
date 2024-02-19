@@ -4,6 +4,7 @@ export default class DonateForm {
   #btnDonate;
   #currentDonate;
   #date;
+  #donateSum;
 
   constructor(donate, timestamp) {
     this.#total = document.querySelector("#total-amount");
@@ -22,6 +23,13 @@ export default class DonateForm {
 
   inputDonate(value) {
     this.#currentDonate = value;
-    console.log("Задонатено:", value);
+    console.log("Задонатено:", this.#currentDonate);
+    this.#input.value = '';
+    this.#date = new Date().getTime();
+    console.log(this.#date);
+     this.#donateSum = Number.parseInt(this.#total.innerHTML)+ this.#currentDonate;
+    // console.log(Number.parseInt(this.#total.innerHTML) + this.#currentDonate);
+    console.log(this.#donateSum);
+     this.#total.innerHTML = `${this.#donateSum}$`
   }
 }
